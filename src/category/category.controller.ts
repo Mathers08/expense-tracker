@@ -25,13 +25,13 @@ export class CategoryController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   create(@Body() createCategoryDto: CreateCategoryDto, @Req() req) {
-    return this.categoryService.create(createCategoryDto, req.user.id);
+    return this.categoryService.create(createCategoryDto, +req.user.id);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   findAll(@Req() req) {
-    return this.categoryService.findAll(req.user.id);
+    return this.categoryService.findAll(+req.user.id);
   }
 
   @Get(':id')

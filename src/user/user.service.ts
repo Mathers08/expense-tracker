@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./entities/user.entity";
 import { Repository } from "typeorm";
-import * as argon2 from 'argon2';
+import * as argon from 'argon2';
 import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
@@ -22,7 +22,7 @@ export class UserService {
 
     const user = await this.userRepository.save({
       email: createUserDto.email,
-      password: await argon2.hash(createUserDto.password)
+      password: await argon.hash(createUserDto.password)
     });
 
     const token = this.jwtService.sign({ email: createUserDto.email });
@@ -32,5 +32,9 @@ export class UserService {
 
   async findOne(email: string) {
     return this.userRepository.findOne({ where: { email } });
+  }
+
+  async findAll() {
+    return this.userRepository.find();
   }
 }

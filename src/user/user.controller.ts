@@ -18,4 +18,9 @@ export class UserController {
     return this.userService.findOne(email);
   }
 
+  @Post('findAll')
+  findAll() {
+    return this.userService.findAll();
+  }
+
 }
